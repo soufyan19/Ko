@@ -1,0 +1,57 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-cairo: 'Cairo', system-ui, sans-serif;
+    --font-amiri: 'Amiri', serif;
+    --font-tajawal: 'Tajawal', sans-serif;
+    --font-ruqaa: 'Aref Ruqaa', serif;
+    --font-kufi: 'Reem Kufi', sans-serif;
+    --font-lalezar: 'Lalezar', cursive;
+    --font-marhey: 'Marhey', cursive;
+    --font-scheherazade: 'Scheherazade New', serif;
+    --font-changa: 'Changa', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-cairo);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+.font-cairo { font-family: var(--font-cairo); }
+.font-amiri { font-family: var(--font-amiri); }
+.font-tajawal { font-family: var(--font-tajawal); }
+.font-ruqaa { font-family: var(--font-ruqaa); }
+.font-kufi { font-family: var(--font-kufi); }
+.font-lalezar { font-family: var(--font-lalezar); }
+.font-marhey { font-family: var(--font-marhey); }
+.font-scheherazade { font-family: var(--font-scheherazade); }
+.font-changa { font-family: var(--font-changa); }
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.45);
+}
+
+/* Keyboard key press tactical feedback */
+.key-press-effect {
+  transition: transform 0.08s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.08s ease, box-shadow 0.08s ease;
+  user-select: none;
+}
+.key-press-effect:active {
+  transform: translateY(2px) scale(0.96);
+}
