@@ -12,7 +12,8 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-      - uses: android-actions/setup-android@v3
+      - name: Accept Android Licenses
+        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
       - name: Build Web & Add Android Capacitor
         run: |
           npm install --legacy-peer-deps
