@@ -1,20 +1,31 @@
-
-name: CI Workflow
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  workflow_dispatch:
-
+name: Build Web to APK
+on: [workflow_dispatch, push]
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Run setup script
-        run: echo "Workflow executed successfully!"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build Web & Add Android Capacitor
+        run: |
+          npm install
+          npm run build
+          npm install @capacitor/core @capacitor/cli @capacitor/android
+          npx cap init "KoApp" "com.soufyan.koapp" --web-dir dist
+          npx cap add android
+          npx cap sync android
+      - name: Build Debug APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
